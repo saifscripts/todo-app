@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { useAppDispatch } from '@/redux/hooks';
 import { ITodo } from './interfaces';
-import { deleteTodo } from './todoSlice';
+import { deleteTodo, toggleComplete } from './todoSlice';
 
 interface ITodoCardProps {
   todo: ITodo;
@@ -11,9 +11,21 @@ const TodoCard = ({ todo }: ITodoCardProps) => {
   const dispatch = useAppDispatch();
   return (
     <div className="bg-white rounded-md p-3 flex justify-between items-center border">
-      <input type="checkbox" name="" id="" />
+      <input
+        type="checkbox"
+        name="toggleComplete"
+        onChange={() => dispatch(toggleComplete(todo.id))}
+        id=""
+      />
       <p>{todo.title}</p>
       <p>{todo.description}</p>
+      <div>
+        {todo.isCompleted ? (
+          <p className="text-green-400">Done</p>
+        ) : (
+          <p className="text-red-400">Pending</p>
+        )}
+      </div>
       <div className="space-x-3">
         <Button
           onClick={() => dispatch(deleteTodo(todo.id))}
