@@ -12,6 +12,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useAppDispatch } from '@/redux/hooks';
 import { FormEvent, useState } from 'react';
+import { uid } from 'uid';
 import { addTodo } from './todoSlice';
 
 const AddTodoModal = () => {
@@ -21,7 +22,7 @@ const AddTodoModal = () => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    dispatch(addTodo({ title, description }));
+    dispatch(addTodo({ title, description, id: uid() }));
   };
 
   return (
