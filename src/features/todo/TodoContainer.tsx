@@ -1,20 +1,23 @@
+import AddTodoModal from './AddTodoModal';
 import TodoCard from './TodoCard';
 
 const TodoContainer = () => {
   return (
     <div>
-      <div>
-        <button>Add todo</button>
+      <div className="flex justify-between items-center">
+        <AddTodoModal />
         <button>Filter</button>
       </div>
 
-      <div className="bg-slate-100 p-5 rounded-xl space-y-3">
-        <TodoCard />
-        <TodoCard />
-        <TodoCard />
-        {/* <div className="bg-white rounded-md p-5 font-bold flex justify-center items-center">
+      <div className="bg-primary-gradient p-2 rounded-xl">
+        <div className="p-5 bg-white rounded-lg bg-opacity-70 space-y-3">
+          <TodoCard />
+          <TodoCard />
+          <TodoCard />
+          {/* <div className="bg-white rounded-md p-5 font-bold flex justify-center items-center">
           <p>There is no task pending</p>
         </div> */}
+        </div>
       </div>
     </div>
   );
