@@ -8,7 +8,7 @@ export type IPriority = keyof typeof PRIORITY;
 export type IFilterBy = keyof typeof PRIORITY | 'none';
 
 export interface ITodo {
-  id: string;
+  id?: string;
   title: string;
   description: string;
   priority: IPriority;

@@ -16,7 +16,7 @@ const TodoCard = ({ todo }: ITodoCardProps) => {
       <input
         type="checkbox"
         name="toggleComplete"
-        onChange={() => dispatch(toggleComplete(todo.id))}
+        onChange={() => dispatch(toggleComplete(todo.id as string))}
         className="mr-3"
       />
 
@@ -45,7 +45,7 @@ const TodoCard = ({ todo }: ITodoCardProps) => {
 
       <div className="flex justify-end items-center flex-1 gap-3">
         <Button
-          onClick={() => dispatch(deleteTodo(todo.id))}
+          onClick={() => dispatch(deleteTodo(todo.id as string))}
           className="bg-red-400"
         >
           <svg

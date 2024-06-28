@@ -19,23 +19,26 @@ import {
 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useAppDispatch } from '@/redux/hooks';
+import { useAddTodoMutation } from '@/redux/api/api';
 import { FormEvent, useState } from 'react';
-import { uid } from 'uid';
 import { PRIORITY } from './interfaces';
-import { addTodo } from './todoSlice';
 
 const AddTodoModal = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [priority, setPriority] = useState<keyof typeof PRIORITY>('high');
 
-  const dispatch = useAppDispatch();
+  const [addTodo, { data }] = useAddTodoMutation();
+
+  //   const dispatch = useAppDispatch();
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    dispatch(addTodo({ title, description, id: uid(), priority }));
+    // dispatch(addTodo({ title, description, priority }));
+    addTodo({ title, description, priority });
   };
+
+  console.log(data);
 
   return (
     <Dialog>
