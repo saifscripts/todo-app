@@ -28,7 +28,7 @@ const AddTodoModal = () => {
   const [description, setDescription] = useState('');
   const [priority, setPriority] = useState<keyof typeof PRIORITY>('high');
 
-  const [addTodo, { data }] = useAddTodoMutation();
+  const [addTodo] = useAddTodoMutation();
 
   //   const dispatch = useAppDispatch();
 
@@ -37,8 +37,6 @@ const AddTodoModal = () => {
     // dispatch(addTodo({ title, description, priority }));
     addTodo({ title, description, priority, isCompleted: false });
   };
-
-  console.log(data);
 
   return (
     <Dialog>

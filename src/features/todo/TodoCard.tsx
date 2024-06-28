@@ -1,9 +1,10 @@
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { useDeleteTodoMutation } from '@/redux/api/api';
 import { useAppDispatch } from '@/redux/hooks';
 import EditTodoModal from './EditTodoModal';
 import { ITodo, PRIORITY } from './interfaces';
-import { deleteTodo, toggleComplete } from './todoSlice';
+import { toggleComplete } from './todoSlice';
 
 interface ITodoCardProps {
   todo: ITodo;
@@ -11,12 +12,15 @@ interface ITodoCardProps {
 
 const TodoCard = ({ todo }: ITodoCardProps) => {
   const dispatch = useAppDispatch();
+
+  const [deleteTodo] = useDeleteTodoMutation();
+
   return (
     <div className="bg-white rounded-md p-3 flex justify-between items-center border w-full">
       <input
         type="checkbox"
         name="toggleComplete"
-        onChange={() => dispatch(toggleComplete(todo.id as string))}
+        onChange={() => dispatch(toggleComplete(todo._id as string))}
         className="mr-3"
       />
 
@@ -45,7 +49,7 @@ const TodoCard = ({ todo }: ITodoCardProps) => {
 
       <div className="flex justify-end items-center flex-1 gap-3">
         <Button
-          onClick={() => dispatch(deleteTodo(todo.id as string))}
+          onClick={() => deleteTodo(todo._id as string)}
           className="bg-red-400"
         >
           <svg

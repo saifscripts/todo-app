@@ -26,7 +26,9 @@ const TodoContainer = () => {
       <div className="bg-primary-gradient p-2 rounded-xl">
         <div className="p-5 bg-white rounded-lg bg-opacity-70 space-y-3">
           {filteredTodos?.length ? (
-            filteredTodos?.map((todo) => <TodoCard key={todo.id} todo={todo} />)
+            filteredTodos?.map((todo) => (
+              <TodoCard key={todo._id} todo={todo} />
+            ))
           ) : (
             <div className="bg-white rounded-md p-5 font-bold flex justify-center items-center">
               <p>No Task</p>
