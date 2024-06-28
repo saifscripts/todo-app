@@ -8,21 +8,33 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useAppDispatch } from '@/redux/hooks';
 import { FormEvent, useState } from 'react';
 import { uid } from 'uid';
+import { PRIORITY } from './interfaces';
 import { addTodo } from './todoSlice';
 
 const AddTodoModal = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [priority, setPriority] = useState<keyof typeof PRIORITY>('high');
+
   const dispatch = useAppDispatch();
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    dispatch(addTodo({ title, description, id: uid() }));
+    dispatch(addTodo({ title, description, id: uid(), priority }));
   };
 
   return (
@@ -61,6 +73,25 @@ const AddTodoModal = () => {
               value={description}
               className="col-span-3"
             />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="description" className="text-right">
+              Priority
+            </Label>
+            <Select
+              onValueChange={(value) =>
+                setPriority(value as keyof typeof PRIORITY)
+              }
+            >
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Select Priority" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value={PRIORITY.high}>High</SelectItem>
+                <SelectItem value={PRIORITY.medium}>Medium</SelectItem>
+                <SelectItem value={PRIORITY.low}>Low</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
           <div className="flex justify-end">
             <DialogClose asChild>

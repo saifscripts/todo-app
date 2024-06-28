@@ -1,8 +1,9 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { ITodo, TodoState } from './interfaces';
+import { IFilterBy, ITodo, TodoState } from './interfaces';
 
 const initialState: TodoState = {
   todos: [],
+  filterBy: 'none',
 };
 
 const todoSlice = createSlice({
@@ -27,8 +28,12 @@ const todoSlice = createSlice({
         isCompleted: !task!.isCompleted,
       } as ITodo);
     },
+    filterByPriority: (state, action: PayloadAction<IFilterBy>) => {
+      state.filterBy = action.payload;
+    },
   },
 });
 
-export const { addTodo, deleteTodo, toggleComplete } = todoSlice.actions;
+export const { addTodo, deleteTodo, toggleComplete, filterByPriority } =
+  todoSlice.actions;
 export default todoSlice.reducer;

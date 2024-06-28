@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 import { useAppDispatch } from '@/redux/hooks';
-import { ITodo } from './interfaces';
+import { ITodo, PRIORITY } from './interfaces';
 import { deleteTodo, toggleComplete } from './todoSlice';
 
 interface ITodoCardProps {
@@ -19,6 +20,7 @@ const TodoCard = ({ todo }: ITodoCardProps) => {
       />
       <p>{todo.title}</p>
       <p>{todo.description}</p>
+
       <div>
         {todo.isCompleted ? (
           <p className="text-green-400">Done</p>
@@ -26,6 +28,15 @@ const TodoCard = ({ todo }: ITodoCardProps) => {
           <p className="text-red-400">Pending</p>
         )}
       </div>
+      <p
+        className={cn('capitalize', {
+          'text-red-800': todo.priority === PRIORITY.high,
+          'text-orange-500': todo.priority === PRIORITY.medium,
+          'text-gray-700': todo.priority === PRIORITY.low,
+        })}
+      >
+        {todo.priority}
+      </p>
       <div className="space-x-3">
         <Button
           onClick={() => dispatch(deleteTodo(todo.id))}
