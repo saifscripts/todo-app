@@ -1,12 +1,18 @@
+import { useGetTodosQuery } from '@/redux/api/api';
 import { useAppSelector } from '@/redux/hooks';
 import AddTodoModal from './AddTodoModal';
 import TodoCard from './TodoCard';
 import TodoFilter from './TodoFilter';
 
 const TodoContainer = () => {
-  const { todos, filterBy } = useAppSelector((state) => state.todos);
+  const { filterBy } = useAppSelector((state) => state.todos);
+  const { data: todos, isLoading } = useGetTodosQuery('');
 
-  const filteredTodos = todos.filter((item) =>
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
+  const filteredTodos = todos?.data?.filter((item) =>
     filterBy === 'none' ? true : item.priority === filterBy
   );
 
@@ -19,8 +25,8 @@ const TodoContainer = () => {
 
       <div className="bg-primary-gradient p-2 rounded-xl">
         <div className="p-5 bg-white rounded-lg bg-opacity-70 space-y-3">
-          {filteredTodos.length ? (
-            filteredTodos.map((todo) => <TodoCard key={todo.id} todo={todo} />)
+          {filteredTodos?.length ? (
+            filteredTodos?.map((todo) => <TodoCard key={todo.id} todo={todo} />)
           ) : (
             <div className="bg-white rounded-md p-5 font-bold flex justify-center items-center">
               <p>No Task</p>
