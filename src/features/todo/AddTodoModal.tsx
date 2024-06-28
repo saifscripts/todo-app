@@ -35,7 +35,7 @@ const AddTodoModal = () => {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     // dispatch(addTodo({ title, description, priority }));
-    addTodo({ title, description, priority });
+    addTodo({ title, description, priority, isCompleted: false });
   };
 
   console.log(data);
