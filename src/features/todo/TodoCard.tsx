@@ -12,33 +12,38 @@ interface ITodoCardProps {
 const TodoCard = ({ todo }: ITodoCardProps) => {
   const dispatch = useAppDispatch();
   return (
-    <div className="bg-white rounded-md p-3 flex justify-between items-center border">
+    <div className="bg-white rounded-md p-3 flex justify-between items-center border w-full">
       <input
         type="checkbox"
         name="toggleComplete"
         onChange={() => dispatch(toggleComplete(todo.id))}
-        id=""
+        className="mr-3"
       />
-      <p>{todo.title}</p>
-      <p>{todo.description}</p>
 
-      <div>
+      <p className="flex-1">{todo.title}</p>
+
+      <div className="flex-1">
         {todo.isCompleted ? (
           <p className="text-green-400">Done</p>
         ) : (
           <p className="text-red-400">Pending</p>
         )}
       </div>
-      <p
-        className={cn('capitalize', {
-          'text-red-800': todo.priority === PRIORITY.high,
-          'text-orange-500': todo.priority === PRIORITY.medium,
-          'text-gray-700': todo.priority === PRIORITY.low,
-        })}
-      >
-        {todo.priority}
-      </p>
-      <div className="space-x-3">
+
+      <div className="flex-1 flex items-center gap-2">
+        <div
+          className={cn('size-3 rounded-full', {
+            'bg-red-500': todo.priority === PRIORITY.high,
+            'bg-yellow-500': todo.priority === PRIORITY.medium,
+            'bg-gray-500': todo.priority === PRIORITY.low,
+          })}
+        ></div>
+        <p>{todo.priority}</p>
+      </div>
+
+      <p className="flex-2">{todo.description}</p>
+
+      <div className="flex justify-end items-center flex-1 gap-3">
         <Button
           onClick={() => dispatch(deleteTodo(todo.id))}
           className="bg-red-400"

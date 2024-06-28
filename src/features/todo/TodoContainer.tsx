@@ -1,18 +1,17 @@
-import { useGetTodosQuery } from '@/redux/api/api';
 import { useAppSelector } from '@/redux/hooks';
 import AddTodoModal from './AddTodoModal';
 import TodoCard from './TodoCard';
 import TodoFilter from './TodoFilter';
 
 const TodoContainer = () => {
-  const { filterBy } = useAppSelector((state) => state.todos);
-  const { data: todos, isLoading } = useGetTodosQuery('');
+  const { filterBy, todos } = useAppSelector((state) => state.todos);
+  //   const { data: todos, isLoading } = useGetTodosQuery('');
 
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
+  //   if (isLoading) {
+  //     return <p>Loading...</p>;
+  //   }
 
-  const filteredTodos = todos?.data?.filter((item) =>
+  const filteredTodos = todos?.filter((item) =>
     filterBy === 'none' ? true : item.priority === filterBy
   );
 

@@ -6,7 +6,10 @@ export const baseApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000' }),
   endpoints: (builder) => ({
     getTodos: builder.query<{ success: boolean; data: ITodo[] }, string>({
-      query: () => '/tasks',
+      query: () => ({
+        url: '/tasks',
+        method: 'GET',
+      }),
     }),
   }),
 });
