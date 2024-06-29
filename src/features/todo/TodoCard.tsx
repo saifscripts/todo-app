@@ -1,26 +1,38 @@
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { useDeleteTodoMutation } from '@/redux/api/api';
-import { useAppDispatch } from '@/redux/hooks';
+import { useDeleteTodoMutation, useUpdateTodoMutation } from '@/redux/api/api';
 import EditTodoModal from './EditTodoModal';
 import { ITodo, PRIORITY } from './interfaces';
-import { toggleComplete } from './todoSlice';
 
 interface ITodoCardProps {
   todo: ITodo;
 }
 
 const TodoCard = ({ todo }: ITodoCardProps) => {
-  const dispatch = useAppDispatch();
-
   const [deleteTodo] = useDeleteTodoMutation();
+  const [updateTodo] = useUpdateTodoMutation();
+
+  const toggleCompleteStatus = () => {
+    const options = {
+      id: todo._id,
+      data: {
+        isCompleted: !todo.isCompleted,
+        title: todo.title,
+        description: todo.description,
+        priority: todo.priority,
+      },
+    };
+
+    updateTodo(options);
+  };
 
   return (
     <div className="bg-white rounded-md p-3 flex justify-between items-center border w-full">
       <input
         type="checkbox"
         name="toggleComplete"
-        onChange={() => dispatch(toggleComplete(todo._id as string))}
+        checked={todo.isCompleted}
+        onChange={toggleCompleteStatus}
         className="mr-3"
       />
 

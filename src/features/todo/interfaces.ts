@@ -5,10 +5,9 @@ export const PRIORITY = {
 } as const;
 
 export type IPriority = keyof typeof PRIORITY;
-export type IFilterBy = keyof typeof PRIORITY | 'none';
 
 export interface ITodo {
-  _id?: string;
+  _id: string;
   title: string;
   description: string;
   priority: IPriority;
@@ -17,5 +16,4 @@ export interface ITodo {
 
 export interface TodoState {
   todos: ITodo[];
-  filterBy: IFilterBy;
 }

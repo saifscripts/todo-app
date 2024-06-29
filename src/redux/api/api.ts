@@ -7,18 +7,32 @@ export const baseApi = createApi({
   tagTypes: ['todo'],
   endpoints: (builder) => ({
     getTodos: builder.query<{ success: boolean; data: ITodo[] }, string>({
-      query: () => ({
-        url: '/tasks',
-        method: 'GET',
-      }),
+      query: (priority) => {
+        const params = new URLSearchParams();
+
+        if (priority) {
+          params.append('priority', priority);
+        }
+
+        return {
+          url: '/tasks',
+          method: 'GET',
+          params,
+        };
+      },
       providesTags: ['todo'],
     }),
-    addTodo: builder.mutation<{ success: boolean; data: ITodo }, ITodo>({
-      query: (data) => ({
-        url: '/task',
-        method: 'POST',
-        body: data,
-      }),
+    addTodo: builder.mutation<
+      { success: boolean; data: ITodo },
+      Partial<ITodo>
+    >({
+      query: (data) => {
+        return {
+          url: '/task',
+          method: 'POST',
+          body: data,
+        };
+      },
       invalidatesTags: ['todo'],
     }),
     deleteTodo: builder.mutation<{ success: boolean; data: ITodo }, string>({
@@ -28,8 +42,23 @@ export const baseApi = createApi({
       }),
       invalidatesTags: ['todo'],
     }),
+    updateTodo: builder.mutation<
+      { success: boolean; data: ITodo },
+      { id: string; data: Partial<ITodo> }
+    >({
+      query: (options) => ({
+        url: `/task/${options.id}`,
+        method: 'PUT',
+        body: options.data,
+      }),
+      invalidatesTags: ['todo'],
+    }),
   }),
 });
 
-export const { useGetTodosQuery, useAddTodoMutation, useDeleteTodoMutation } =
-  baseApi;
+export const {
+  useGetTodosQuery,
+  useAddTodoMutation,
+  useDeleteTodoMutation,
+  useUpdateTodoMutation,
+} = baseApi;

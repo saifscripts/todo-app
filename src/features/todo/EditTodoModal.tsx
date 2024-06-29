@@ -19,10 +19,9 @@ import {
 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useAppDispatch } from '@/redux/hooks';
+import { useUpdateTodoMutation } from '@/redux/api/api';
 import { FormEvent, useEffect, useState } from 'react';
 import { ITodo, PRIORITY } from './interfaces';
-import { editTodo } from './todoSlice';
 
 interface IEditModalProps {
   todo: ITodo;
@@ -39,11 +38,20 @@ const EditTodoModal = ({ todo }: IEditModalProps) => {
     setPriority(todo.priority);
   }, [todo]);
 
-  const dispatch = useAppDispatch();
+  const [updateTodo] = useUpdateTodoMutation();
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    dispatch(editTodo({ title, description, id: todo.id, priority }));
+    const options = {
+      id: todo._id,
+      data: {
+        title,
+        description,
+        priority,
+        isCompleted: todo.isCompleted,
+      },
+    };
+    updateTodo(options);
   };
 
   return (
